@@ -14,7 +14,7 @@ public class SimulationDriver {
 
         // true: is single-choice question, false: multiple-choice question
         // If wanted to test both, run twice with different input
-        boolean isSingleChoice = false;
+        boolean isSingleChoice = true;
 
         if (isSingleChoice) {
             Question singleChoiceQuestion = new Question(options, true);

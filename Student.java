@@ -1,29 +1,31 @@
+import java.util.List;
+
 public class Student {
 
     // Attributes
     private String uniqueID;
-    private String answer;
+    private List<String> answers;
 
     // Constructor
-    public Student(String uniqueID, String answer) {
+    public Student(String uniqueID, List<String> answers) {
         this.uniqueID = uniqueID;
-        this.answer = answer;
+        this.answers = answers;
     }
-
+    
     // Methods
     public String getUniqueID() {
         return uniqueID;
     }
 
-    public String getAnswer() {
-        return answer;
+    public List<String> getAnswers() {
+        return answers;
     }
 
     public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
     }
 }

@@ -1,6 +1,5 @@
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class VotingService {
 
@@ -14,7 +13,7 @@ public class VotingService {
         this.submissions = new ArrayList<>();
     }
 
-    // Methods
+    // Method to remove submission and add new submission for single choice 
     public void submitAnswer(Student student) {
         boolean studentAlreadySubmitted = submissions.stream()
                 .anyMatch(s -> s.getUniqueID().equals(student.getUniqueID()));
@@ -28,47 +27,41 @@ public class VotingService {
     }
 
     public void displayMultipleChoiceResults() {
+        displayResults("--Multiple-Choice Questions--");
+    }
+
+    public void displaySingleChoiceResults() {
+        displayResults("--Single-Choice Questions--");
+    }
+    
+    // Method to display results for multiple and single choice
+    private void displayResults(String header) {
         int[] answerCounts = new int[questionType.getOptions().length];
 
-        for (int i = 0; i < answerCounts.length; i++) {
-            answerCounts[i] = 0;
-        }
-
         for (Student student : submissions) {
-                String answer = student.getAnswer();
-                int index = Arrays.asList(questionType.getOptions()).indexOf(answer);
-            if (index >= 0 && index < answerCounts.length) {
+            for (String answer : student.getAnswers()) {
+                int index = findAnswerIndex(answer);
+                if (index != -1) {
                     answerCounts[index]++;
+                }
             }
         }
 
-        System.out.println("--Multiple-Choice Questions--");
+        System.out.println(header);
         System.out.println("Submission Results:");
-        for (int i = 0; i < answerCounts.length; i++) {
+        for (int i = 0; i < questionType.getOptions().length; i++) {
             System.out.println(questionType.getOptions()[i] + " = " + answerCounts[i]);
         }
     }
 
-    public void displaySingleChoiceResults() {
-
-        int[] answerCounts = new int[questionType.getOptions().length];
-
-        for (int i = 0; i < answerCounts.length; i++) {
-            answerCounts[i] = 0;
-        }
-
-        for (Student student : submissions) {
-                String answer = student.getAnswer();
-                int index = Arrays.asList(questionType.getOptions()).indexOf(answer);
-            if (index >= 0 && index < answerCounts.length) {
-                    answerCounts[index]++;
+    // Method to find student answers in the answerCounts array
+    private int findAnswerIndex(String answer) {
+        String[] options = questionType.getOptions();
+        for (int i = 0; i < options.length; i++) {
+            if (options[i].equals(answer)) {
+                return i;
             }
         }
-
-        System.out.println("--Single-Choice Questions--");
-        System.out.println("Submission Results:");
-        for (int i = 0; i < answerCounts.length; i++) {
-            System.out.println(questionType.getOptions()[i] + " = " + answerCounts[i]);
-        }
+        return -1;
     }
 }
